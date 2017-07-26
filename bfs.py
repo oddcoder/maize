@@ -4,7 +4,7 @@ def bfs(graph, weights, start, end):
     unexplored = [start] # queue
     parents = {}
     node = None
-    while len(unexplored) != 0 or node == end:
+    while len(unexplored) != 0 and node != end:
         node = unexplored.pop(0)
         if node in visited:
             continue
@@ -13,5 +13,5 @@ def bfs(graph, weights, start, end):
         for child in childs:
             if child not in parents.keys():
                 parents[child] = node
-        unexplored += childs
+                unexplored.append(child)
     return get_path(parents, start, end)
