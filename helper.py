@@ -11,6 +11,8 @@ def possible_moves(graph, weight, node, remove_node=True):
     return ret
 
 def get_path(parents, start, end):
+    if end not in parents:
+        return []
     ret = [end]
     parent = end
     while parent != start:
