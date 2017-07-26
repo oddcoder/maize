@@ -152,4 +152,3 @@ def visualize(graph, weight, start, end, verbose=False):
     window.set_dotcode(dotcode)
     window.connect('delete-event', Gtk.main_quit)
     Gtk.main()
-# okay decompiling parser.pyc
