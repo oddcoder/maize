@@ -119,6 +119,11 @@ def array2graph(maze_array):
     return (
      graph, weight, start, end)
 
+def array2maze(array):
+    maze_array = []
+    for line in array:
+        maze_array.append("".join(str(e) for e in line))
+    return maze_array
 
 def visualize(graph, weight, start, end, verbose=False):
     """
