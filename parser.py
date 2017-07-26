@@ -15,41 +15,41 @@ def read_layer():
         ["##23S321", "11#21##2", "3##31231", "E2312###", "23######"]
     On error it returns empty array and print error with logging 
     """
-    print('Please enter your Maize:')
-    maize = []
+    print('Please enter your Maze:')
+    maze = []
     level0 = input().lower()
-    maize_len = len(level0)
+    maze_len = len(level0)
     if len(set(level0)) != 1 or level0[0] != '#':
-        print('\nThe Maize should be bordered by Walls(#) like this one\n        ##########\n        ###23S321#\n        #11#21##2#\n        #3##31231#\n        #E2312####\n        #23#######\n        ##########')
+        print('\nThe Maze should be bordered by Walls(#) like this one\n        ##########\n        ###23S321#\n        #11#21##2#\n        #3##31231#\n        #E2312####\n        #23#######\n        ##########')
         return []
     while True:
         level = input().lower()
-        if len(level) != maize_len or level[0] != '#' or level[maize_len - 1] != '#':
+        if len(level) != maze_len or level[0] != '#' or level[maze_len - 1] != '#':
             print("Either level is too short or too long or it isn't borderd with #")
             return []
         if len(set(level)) == 1:
             break
-        maize += [level[1:maize_len - 1]]
+        maze += [level[1:maze_len - 1]]
 
-    return maize
+    return maze
 
 
-def check_maize(maize_array):
+def check_maze(maze_array):
     """
     check for the existence of only one start and one end
     and 0 < n <= Min(n,M)/2
-    and check that there is no illegal character in them maize
-    maize array example
+    and check that there is no illegal character in them maze
+    maze array example
     ["##23S321", "11#21##2", "3##31231", "E2312###", "23######"]
     return either True or false of if the array follows the rules
-    no checks are made on the length of the maize or its height
+    no checks are made on the length of the maze or its height
     """
     start = 0
     end = 0
-    M = len(maize_array)
-    N = len(maize_array[0])
+    M = len(maze_array)
+    N = len(maze_array[0])
     n = math.ceil(min(M, N) / 2)
-    for element in maize_array:
+    for element in maze_array:
         for cell in element:
             if cell == 's':
                 start += 1
@@ -68,9 +68,9 @@ def check_maize(maize_array):
     return True
 
 
-def array2graph(maize_array):
+def array2graph(maze_array):
     """
-        this converts the maize_array into a dictionary based graph and a dictionary of
+        this converts the maze_array into a dictionary based graph and a dictionary of
         wieghts (number of steps required to move), start and end.
         graph is implemented this way
         https://www.python.org/doc/essays/graphs/
@@ -86,34 +86,34 @@ def array2graph(maize_array):
     end = tuple()
     weight = {}
     graph = {}
-    imax = len(maize_array) - 1
-    jmax = len(maize_array[0]) - 1
+    imax = len(maze_array) - 1
+    jmax = len(maze_array[0]) - 1
     for i in range(imax + 1):
         for j in range(jmax + 1):
-            if maize_array[i][j] == '#':
+            if maze_array[i][j] == '#':
                 continue
-            elif maize_array[i][j] == 's':
+            elif maze_array[i][j] == 's':
                 start = (
                  i, j)
                 weight[start] = 1
-            elif maize_array[i][j] == 'e':
+            elif maze_array[i][j] == 'e':
                 end = (
                  i, j)
                 weight[end] = 1
             else:
-                weight[i, j] = int(maize_array[i][j])
+                weight[i, j] = int(maze_array[i][j])
             graph[i, j] = []
             if i > 0:
-                if maize_array[i - 1][j] != '#':
+                if maze_array[i - 1][j] != '#':
                     graph[(i, j)] += [(i - 1, j)]
             if j > 0:
-                if maize_array[i][j - 1] != '#':
+                if maze_array[i][j - 1] != '#':
                     graph[(i, j)] += [(i, j - 1)]
             if i < imax:
-                if maize_array[i + 1][j] != '#':
+                if maze_array[i + 1][j] != '#':
                     graph[(i, j)] += [(i + 1, j)]
             if j < jmax:
-                if maize_array[i][j + 1] != '#':
+                if maze_array[i][j + 1] != '#':
                     graph[(i, j)] += [(i, j + 1)]
 
     return (
