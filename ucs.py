@@ -11,7 +11,8 @@ def ucs(graph, weights, start, end):
         if node in visited:
             continue
         visited.add(node)
-        childs = possible_moves(graph, weights[node], node)
+        childs =  list(set(possible_moves(graph, weights[node], node)) - visited)
+        #childs = possible_moves(graph, weights[node], node)
         for child in childs:
             if child not in parents.keys() or weight + weights[node] < weights[parents[child]]:
                 parents[child] = node
