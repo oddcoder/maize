@@ -3,7 +3,7 @@ from helper import *
 def ucs(graph, weights, start, end):
     visited = set()
     unexplored = [] # heap
-    heappush(unexplored, [weights[start], start])
+    heappush(unexplored, [0, start])
     parents = {}
     node = None
     while len(unexplored) != 0 and node != end:
@@ -13,8 +13,8 @@ def ucs(graph, weights, start, end):
         visited.add(node)
         childs = possible_moves(graph, weights[node], node)
         for child in childs:
-            if child not in parents.keys() or weight < weights[parents[child]]:
+            if child not in parents.keys() or weight + weights[node] < weights[parents[child]]:
                 parents[child] = node
-            heappush(unexplored, [weights[child] + weight, child])
+            heappush(unexplored, [weights[node] + weight, child])
     return get_path(parents, start, end)
 
