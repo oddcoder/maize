@@ -13,22 +13,27 @@ def read_layer():
         ##########
     Output example: 
         ["##23S321", "11#21##2", "3##31231", "E2312###", "23######"]
-    On error it returns empty array and print error with logging 
+    On error it returns empty array and print error with logging
+
     """
-    print('Please enter your Maze:')
+    # TODO will loop forever till it finds a last level with border
+    print('Please enter your Maze line by line and without spaces at start prr in between:')
     maze = []
     level0 = input().lower()
     maze_len = len(level0)
+    #check whether maze is bordered , first row must be all #s
     if len(set(level0)) != 1 or level0[0] != '#':
         print('\nThe Maze should be bordered by Walls(#) like this one\n        ##########\n        ###23S321#\n        #11#21##2#\n        #3##31231#\n        #E2312####\n        #23#######\n        ##########')
         return []
+
     while True:
         level = input().lower()
         if len(level) != maze_len or level[0] != '#' or level[maze_len - 1] != '#':
-            print("Either level is too short or too long or it isn't borderd with #")
+            print("Either level is too short or too long or it isn't bordered with #")
             return []
         if len(set(level)) == 1:
             break
+        #after reading each row add it to maze without borders
         maze += [level[1:maze_len - 1]]
 
     return maze
@@ -36,9 +41,9 @@ def read_layer():
 
 def check_maze(maze_array):
     """
-    check for the existence of only one start and one end
-    and 0 < n <= Min(n,M)/2
-    and check that there is no illegal character in them maze
+    check for the existence of only one start element and one end
+    and 0 < n <= Min(N,M)/2, where n is max number of steps that can be put in any element
+    and check that there is no illegal character in the maze
     maze array example
     ["##23S321", "11#21##2", "3##31231", "E2312###", "23######"]
     return either True or false of if the array follows the rules
@@ -46,6 +51,7 @@ def check_maze(maze_array):
     """
     start = 0
     end = 0
+    #M and N are numbers of rows and columns respectively
     M = len(maze_array)
     N = len(maze_array[0])
     n = math.ceil(min(M, N) / 2)
@@ -71,7 +77,7 @@ def check_maze(maze_array):
 def array2graph(maze_array):
     """
         this converts the maze_array into a dictionary based graph and a dictionary of
-        wieghts (number of steps required to move), start and end.
+        weights (number of steps required to move), start and end.
         graph is implemented this way
         https://www.python.org/doc/essays/graphs/
         return value (graph, weight, (startY, startX), (endY, endX))
@@ -79,13 +85,14 @@ def array2graph(maze_array):
             ["##23S321", "11#21##2", "3##31231", "E2312###", "23######"]
         example output
             OMMITTED
-        exmple output type
+        example output type
             ({}, {}, (int, int), (int, int))
     """
     start = tuple()
     end = tuple()
     weight = {}
     graph = {}
+    #imax is max index of rows and jmax is max index of columns
     imax = len(maze_array) - 1
     jmax = len(maze_array[0]) - 1
     for i in range(imax + 1):
@@ -102,6 +109,8 @@ def array2graph(maze_array):
                 weight[end] = 1
             else:
                 weight[i, j] = int(maze_array[i][j])
+            #record available neighbours for each node in graph dictionary
+            #why didn't put prackets here (i,j) TODO
             graph[i, j] = []
             if i > 0:
                 if maze_array[i - 1][j] != '#':
@@ -157,3 +166,4 @@ def visualize(graph, weight, start, end, verbose=False):
     window.set_dotcode(dotcode)
     window.connect('delete-event', Gtk.main_quit)
     Gtk.main()
+

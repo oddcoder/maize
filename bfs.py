@@ -1,4 +1,10 @@
 from helper import *
+'''
+input arguments:
+graph: dictionary of neighbours for each node in the maze
+weights: dictionary of weights for each node in the maze
+
+'''
 def bfs(graph, weights, start, end):
     visited = set()
     unexplored = [start] # queue
