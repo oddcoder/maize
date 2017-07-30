@@ -17,7 +17,7 @@ def read_layer():
 
     """
     # TODO will loop forever till it finds a last level with border
-    print('Please enter your Maze line by line and without spaces at start prr in between:')
+    print('Please enter your Maze line by line and without spaces at start or in between:')
     maze = []
     level0 = input().lower()
     maze_len = len(level0)
