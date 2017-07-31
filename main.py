@@ -4,6 +4,7 @@ from parser import *
 from bfs import *
 from ucs import ucs
 from gen import *
+from astar import *
 maze = []
 while True:
     try:
@@ -35,7 +36,7 @@ while True:
             print("Unfortunately visualiztion wont work because you need xdot\n\ttry: `pip install xdot`")
 
     else:
-        if command.lower() not in ["bfs", "dfs", "ucs"]:
+        if command.lower() not in ["bfs", "dfs", "ucs", "a*"]:
             print("Unknown command")
             continue
         if not check_maze(maze):
@@ -47,3 +48,17 @@ while True:
             print(dfs(graph,weights,start,end))
         elif command.lower() == "ucs":
             print(ucs(graph,weights,start,end))
+        elif command.lower() == "a*":
+            try:
+                algo = input("Heuristic [Default: (E)ucledian]: ")
+            except:
+                algo = "E"
+            algo = algo.lower()
+            if algo not in ["e", "m"]:
+                print("Either input `E` or `M`")
+                continue;
+            if algo == "e":
+                print(astar(graph,weights,start,end,eucliedean))
+            elif algo == "m":
+                print(astar(graph,weights,start,end,manhattan))
+
