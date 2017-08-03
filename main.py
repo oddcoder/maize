@@ -5,6 +5,8 @@ from bfs import *
 from ucs import ucs
 from gen import *
 from astar import *
+for line in open("logo"):
+    print(line.strip("\n"))
 maze = []
 while True:
     try:
