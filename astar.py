@@ -24,13 +24,14 @@ def astar(graph, weights, start, end, heuristic):
     #weight takes heurestic cost value and node takes coordinates of node having this weight
         [weight, node] = heappop(unexplored)
         if node in visited:
-            continue
+            continue #pop another node
         visited.add(node)
         print(node)
         childs =  list(set(possible_moves(graph, weights[node], node)) - visited)
         #childs = possible_moves(graph, weights[node], node)
         for child in childs:
-            if child not in parents.keys() or weight + weights[child] + heuristic(child, end) < weights[parents[child]]:
+            #check if any of the children is visited before,
+            if child not in parents.keys() or weight + weights[child] + heuristic(child, end) - heuristic(node, end) < weights[parents[child]]:
                 parents[child] = node
             heappush(unexplored, [weights[child] + weight + heuristic(child, end) - heuristic(node, end), child])
             :q
