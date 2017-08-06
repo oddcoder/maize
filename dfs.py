@@ -9,6 +9,7 @@ def dfs(graph, weights, start, end):
         if node in visited:
             continue
         visited.add(node)
+        print(node)
         childs =  list(set(possible_moves(graph, weights[node], node)) - visited)
         for child in childs:
             parents[child] = node

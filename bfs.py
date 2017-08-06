@@ -15,6 +15,7 @@ def bfs(graph, weights, start, end):
         if node in visited:
             continue
         visited.add(node)
+        print(node)
         childs =  list(set(possible_moves(graph, weights[node], node)) - visited)
         #childs =  possible_moves(graph, weights[node], node)
         for child in childs:
